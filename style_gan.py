@@ -19,8 +19,8 @@ def extract_frames(video_path: str, destination_path: str) -> None:
     video = cv2.VideoCapture(video_path)
     currentframe = 0
     while True:
-        ret, frame = video.read()
-        if ret:
+        has_frame, frame = video.read()
+        if has_frame:
             name = f"{destination_path}/frame{currentframe}.jpg"
             cv2.imwrite(name, frame)
             currentframe += 1
@@ -61,11 +61,11 @@ def generate_video_from_styled_frames(styled_frames_path: str, styled_video_name
         size = (width, height)
         image_array.append(image)
 
-    out = cv2.VideoWriter(f"{styled_video_name}.mp4", cv2.VideoWriter_fourcc(*"MP4V"), 15, size)
+    output = cv2.VideoWriter(f"{styled_video_name}.mp4", cv2.VideoWriter_fourcc(*"MP4V"), 15, size)
 
     for i in range(len(image_array)):
-        out.write(image_array[i])
-    out.release()
+        output.write(image_array[i])
+    output.release()
 
 
 def main():
